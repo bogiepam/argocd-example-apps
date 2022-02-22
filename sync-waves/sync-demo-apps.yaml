@@ -8,7 +8,7 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: production
+  project: default
   source:
     repoURL: https://github.com/bogiepam/argocd-example-apps
     targetRevision: HEAD
@@ -34,7 +34,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "2"
 spec:
-  project: staging
+  project: default
   source:
     repoURL: https://github.com/bogiepam/argocd-example-apps
     targetRevision: HEAD
