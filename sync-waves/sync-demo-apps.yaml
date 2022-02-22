@@ -1,0 +1,49 @@
+---
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sync-wave-app-production
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: production
+  source:
+    repoURL: https://github.com/bogiepam/argocd-example-apps
+    targetRevision: HEAD
+    path: sync-waves/production
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated:
+      selfHeal: false
+      prune: false
+      allowEmpty: false
+
+---
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sync-wave-app-staging
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  project: staging
+  source:
+    repoURL: https://github.com/bogiepam/argocd-example-apps
+    targetRevision: HEAD
+    path: sync-waves/staging
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated:
+      selfHeal: false
+      prune: false
+      allowEmpty: false
