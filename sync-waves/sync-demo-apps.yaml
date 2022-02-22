@@ -16,7 +16,7 @@ spec:
   source:
     repoURL: https://github.com/bogiepam/argocd-example-apps
     targetRevision: HEAD
-    path: sync-waves
+    path: sync-waves/sync-demo-apps
   destination:
     server: https://kubernetes.default.svc
     namespace: default
