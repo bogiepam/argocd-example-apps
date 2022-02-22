@@ -3,8 +3,8 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   generateName: upgrade-sql-schema-staging
-  annotations:
-    argocd.argoproj.io/hook: PreSync
+  #annotations:
+   # argocd.argoproj.io/hook: PreSync
 spec:
   template:
     spec:
@@ -58,7 +58,7 @@ spec:
       containers:
         - name: page-up-staging
           image: alpine:latest
-          command: ["sleep", "2"]
+          command: ["sleep", "5"]
       restartPolicy: Never
   backoffLimit: 0
 ---
@@ -66,8 +66,8 @@ apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
   name: frontend-staging
-  annotations:
-    argocd.argoproj.io/sync-wave: "2"
+  #annotations:
+   # argocd.argoproj.io/sync-wave: "2"
 spec:
   replicas: 1
   selector:
@@ -86,8 +86,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: frontend-staging
-  annotations:
-    argocd.argoproj.io/sync-wave: "2"
+  #annotations:
+   # argocd.argoproj.io/sync-wave: "2"
 spec:
   selector:
     tier: frontend
@@ -100,15 +100,15 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: maint-page-down-staging
-  annotations:
+  #annotations:
     #argocd.argoproj.io/hook: Sync
     #argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
-    argocd.argoproj.io/sync-wave: "3"
+    #argocd.argoproj.io/sync-wave: "3"
 spec:
   template:
     spec:
       containers:
         - name: page-down-staging
           image: alpine:latest
-          command: ["sleep", "2"]
+          command: ["sleep", "5"]
       restartPolicy: Never
