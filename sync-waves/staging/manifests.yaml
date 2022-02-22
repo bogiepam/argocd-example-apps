@@ -2,14 +2,14 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  generateName: upgrade-sql-schema
+  generateName: upgrade-sql-schema-staging
   annotations:
     argocd.argoproj.io/hook: PreSync
 spec:
   template:
     spec:
       containers:
-        - name: upgrade-sql-schema
+        - name: upgrade-sql-schema-staging
           image: alpine:latest
           command: ["sleep", "5"]
       restartPolicy: Never
@@ -17,7 +17,7 @@ spec:
 apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
-  name: backend
+  name: backend-staging
 spec:
   replicas: 1
   selector:
@@ -35,7 +35,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: backend
+  name: backend-staging
 spec:
   selector:
     tier: backend
@@ -47,16 +47,16 @@ spec:
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: maint-page-up
+  name: maint-page-up-staging
   annotations:
-    argocd.argoproj.io/hook: Sync
-    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+    #argocd.argoproj.io/hook: Sync
+    #argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
     argocd.argoproj.io/sync-wave: "1"
 spec:
   template:
     spec:
       containers:
-        - name: page-up
+        - name: page-up-staging
           image: alpine:latest
           command: ["sleep", "2"]
       restartPolicy: Never
@@ -65,7 +65,7 @@ spec:
 apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
-  name: frontend
+  name: frontend-staging
   annotations:
     argocd.argoproj.io/sync-wave: "2"
 spec:
@@ -79,13 +79,13 @@ spec:
         tier: frontend
     spec:
       containers:
-        - name: main
+        - name: main-staging
           image: nginx:latest
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: frontend
+  name: frontend-staging
   annotations:
     argocd.argoproj.io/sync-wave: "2"
 spec:
@@ -99,16 +99,16 @@ spec:
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: maint-page-down
+  name: maint-page-down-staging
   annotations:
-    argocd.argoproj.io/hook: Sync
-    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+    #argocd.argoproj.io/hook: Sync
+    #argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
     argocd.argoproj.io/sync-wave: "3"
 spec:
   template:
     spec:
       containers:
-        - name: page-down
+        - name: page-down-staging
           image: alpine:latest
           command: ["sleep", "2"]
       restartPolicy: Never
