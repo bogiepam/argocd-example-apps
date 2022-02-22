@@ -22,6 +22,6 @@ spec:
     namespace: default
   syncPolicy:
     automated:
-      selfHeal: false
-      prune: false
-      allowEmpty: false
+      selfHeal: true
+      prune: true
+      allowEmpty: true
