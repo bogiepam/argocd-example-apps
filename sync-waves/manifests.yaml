@@ -4,7 +4,8 @@ kind: Job
 metadata:
   generateName: upgrade-sql-schema
   annotations:
-    argocd.argoproj.io/hook: PreSync
+    #argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/sync-wave: "-1"
 spec:
   template:
     spec:
@@ -49,8 +50,8 @@ kind: Job
 metadata:
   name: maint-page-up
   annotations:
-    argocd.argoproj.io/hook: Sync
-    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+    #argocd.argoproj.io/hook: Sync
+    #argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
     argocd.argoproj.io/sync-wave: "1"
 spec:
   template:
@@ -101,8 +102,8 @@ kind: Job
 metadata:
   name: maint-page-down
   annotations:
-    argocd.argoproj.io/hook: Sync
-    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+    #argocd.argoproj.io/hook: Sync
+    #argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
     argocd.argoproj.io/sync-wave: "3"
 spec:
   template:
