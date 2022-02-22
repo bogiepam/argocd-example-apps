@@ -2,9 +2,9 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  generateName: upgrade-sql-schema-staging
+  name: upgrade-sql-schema-staging
   #annotations:
-   # argocd.argoproj.io/hook: PreSync
+    #argocd.argoproj.io/hook: PreSync
 spec:
   template:
     spec:
