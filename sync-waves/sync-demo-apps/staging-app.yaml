@@ -1,22 +1,18 @@
----
-
-
-
----
-
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: sync-demo-apps
+  name: sync-wave-app-staging
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   project: default
   source:
     repoURL: https://github.com/bogiepam/argocd-example-apps
     targetRevision: HEAD
-    path: sync-waves
+    path: sync-waves/sync-demo-apps/staging
   destination:
     server: https://kubernetes.default.svc
     namespace: default
