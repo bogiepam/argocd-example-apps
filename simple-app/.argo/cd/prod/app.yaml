@@ -15,7 +15,7 @@ spec:
   project: production
   source:
     repoURL: https://github.com/bogiepam/argocd-example-apps
-    targetRevision: production
+    targetRevision: prod
     path: simple-app/manifest/prod
   destination:
     server: https://kubernetes.default.svc
