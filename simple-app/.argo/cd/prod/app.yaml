@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: simple-app-staging
+  name: simple-app-prod
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -9,17 +9,17 @@ metadata:
     #argocd-image-updater.argoproj.io/image-list: simpleapp=kostiscodefresh/gitops-simple-app
     #argocd-image-updater.argoproj.io/demoapp.update-strategy: latest
     #argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
-    #argocd-image-updater.argoproj.io/write-back-target: kustomization:../../manifest/staging
-    #argocd-image-updater.argoproj.io/git-branch: staging
+    #argocd-image-updater.argoproj.io/write-back-target: kustomization:../../manifest/prod
+    #argocd-image-updater.argoproj.io/git-branch: prod
 spec:
-  project: staging
+  project: production
   source:
     repoURL: https://github.com/bogiepam/argocd-example-apps
-    targetRevision: staging
-    path: simple-app/manifest/staging
+    targetRevision: production
+    path: simple-app/manifest/prod
   destination:
     server: https://kubernetes.default.svc
-    namespace: staging
+    namespace: production
   syncPolicy:
     automated:
       selfHeal: true
